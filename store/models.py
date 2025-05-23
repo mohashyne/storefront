@@ -5,6 +5,13 @@ from django.db import models
 # Customer -> Many (Order)
 # order  ->  Many (Item)
 # Cart -> Many  (Item)
+# Promotion -> Product (many-to-many)
+
+class Promotion(models.Model):
+    description = models.CharField(max_length=255)
+    discount = models.FloatField()
+    # products
+
 class Collection(models.Model):
     title = models.CharField(max_length=255)
 
@@ -15,6 +22,8 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=6, decimal_places=2)
     inventory = models.IntegerField()
     last_update = models.DateTimeField(auto_now=True)
+    promotions = models.ManyToManyField(Promotion)
+    # promotions = models.ManyToManyField(Promotion, related_name='products') if we set it on promotions
 
 
 class Customer(models.Model):
